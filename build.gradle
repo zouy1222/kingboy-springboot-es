@@ -22,9 +22,15 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	jnaVersion='3.0.9'
+}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
+	compile("com.sun.jna:jna:$jnaVersion")
 	compile('org.springframework.boot:spring-boot-starter-web')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	compile project(":common")
 }

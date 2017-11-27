@@ -1,6 +1,10 @@
 spring:
   application:
     name: kingboy-springboot-es
+  data:
+    #ElasticSearch的连接地址
+    elasticsearch:
+      cluster-nodes: localhost:9300
 
 server:
   port: 8080
