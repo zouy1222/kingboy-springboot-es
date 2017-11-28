@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -43,6 +45,13 @@ public class KingboySpringbootEsApplicationTests {
     }
 
     @Test
+    public void deleteUserWhenSuccess() throws Exception {
+        mockMvc.perform(delete("/user/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void saveUsersWhenSuccess() throws Exception {
         mockMvc.perform(post("/user/list")
                 .content(getContent())
@@ -55,7 +64,17 @@ public class KingboySpringbootEsApplicationTests {
         String contentAsString = mockMvc.perform(get("/user/username/king")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(contentAsString);
+    }
+
+    @Test
+    public void findByAgeAndUsernameStartAndIdWhenSuccess() throws Exception {
+        String contentAsString = mockMvc.perform(get("/user/ageTo/18/name_start/ki/id/12")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
                 .andReturn().getResponse().getContentAsString();
         System.out.println(contentAsString);
     }
