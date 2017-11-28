@@ -18,12 +18,23 @@
 ES是什么？我们可以把ES比作一个Mysql数据库，同样用来存储数据，不过比Mysql提供了更多的搜索功能,例如分词搜索，关联度搜索等，而且搜索速度也不是同一级别的，
 ES能够实现百万数据/秒的查询速度。接下来将ES中用到的概念和Mysql进行类比。
 
-- index 索引，相当于Mysql中的一个库，例如有一个叫『jd』的库，那么里面可以建立很多表，存储不同类型的数据，而表在ES中就是type。
-- type  类型，相当于Mysql中的一张表，存储json类型的数据
-- document 文档，一个文档相当于Mysql一行的数据
-- field 列，相当于mysql中的列，也就是一个属性
-- shards 分片，通俗理解，就是数据分成几块区域来存储，可以理解为mysql中的分库分表(不太恰当)
-- replicas 备份，就是分片的备份数,相当于mysql的备份库
+> index 
+>> 索引，相当于Mysql中的一个库，例如有一个叫『jd』的库，那么里面可以建立很多表，存储不同类型的数据，而表在ES中就是type。
+
+> type  
+>> 类型，相当于Mysql中的一张表，存储json类型的数据
+
+> document
+>> 文档，一个文档相当于Mysql一行的数据
+
+> field 
+>> 列，相当于mysql中的列，也就是一个属性
+
+> shards
+>>分片，通俗理解，就是数据分成几块区域来存储，可以理解为mysql中的分库分表(不太恰当)
+
+> replicas
+>> 备份，就是分片的备份数,相当于mysql的备份库
 
 ES使用json数据进行数据传递，例如{username:king,age:12},那么这一整条json数据就是一个document，而username,age就是field。
 
@@ -46,7 +57,7 @@ testCompile('org.springframework.boot:spring-boot-starter-test')
 
 > data-elasticsearch的依赖结构
 
-![ES依赖结构](readme/image/1.png)
+>>>> ![ES依赖结构](readme/image/1.png)
 
 
 连接独立的ES实例的配置如下
@@ -82,7 +93,7 @@ spring:
 
 #### 2.主键注解：@Id (相当于Hibernate实体的主键@Id注解)
 
-(必写：如果属性名不是id,例如属性名是userId。如果属性名是id，则可以省略)
+(必写)
 
 只是一个标识，并没有属性。
 
@@ -131,7 +142,7 @@ public class User {
 ### 六、编写仓库
 
 #### 1.代码编写
-写一个类继承ElasticsearchRepository<T, E>，需要写两个泛型，第一个代表要存储的实体类型，第二个代表主键类型，例如写一个User类的仓储如下：
+写一个类继承ElasticsearchRepository<T, ID>，需要写两个泛型，第一个代表要存储的实体类型，第二个代表主键类型，例如写一个User类的仓储如下：
 
 ```java
 /**
@@ -148,14 +159,14 @@ public interface UserRepository extends ElasticsearchRepository<User, Long>{
 我们来看一下ElasticsearchRepository的继承结构(如下)，其实就可以发现仍然是JPA的一套Reposiroty，那我们其实就可以用JPA的一套接口操作进行数据的增删改查，
 spring会自动根据方法名为我们生成对应的代理类去实现这些方法。
 
-![ElasticsearchRepository结构](readme/image/2.png)
+>>>> ![ElasticsearchRepository结构](readme/image/2.png)
 
 
 #### 2.CRUD基础操作
 
 先来看看ElasticsearchRepository已经实现的一些基础方法，这些方法的名称已经具有很好的说明解释了，那么大家自己看看，很容易就能理解
 
-![ElasticsearchRepository基础操作](readme/image/3.png)
+>>>> ![ElasticsearchRepository基础操作](readme/image/3.png)
 
 
 #### 3.稍微复杂操作
@@ -187,7 +198,7 @@ jpa自带的这些方法肯定是不能满足我们的业务需求的，那么�
 |OrderBy            |findByAvailableTrueOrderByNameDesc  |{"sort" : [{ "name" : {"order" : "desc"} }],"bool" : {"must" : {"field" : {"available" : true}}}}|
 
 
-下面写几个示例进行演示，只把仓储列出来了，整体运行是测试过的，没问题，如果需要整体代码请到本文顶部的github仓库查看。
+下面写几个示例进行演示，只把仓储层的列出来了，整体运行是测试过的，没问题，如果需要整体代码请到本文顶部的github仓库查看。
 
 ```java
 /**
