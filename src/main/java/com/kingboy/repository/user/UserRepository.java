@@ -1,7 +1,6 @@
-package com.kingboy.repository;
+package com.kingboy.repository.user;
 
-import com.kingboy.repository.entity.User;
-import org.springframework.cglib.core.Local;
+import com.kingboy.repository.user.entity.User;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 import java.time.LocalDateTime;

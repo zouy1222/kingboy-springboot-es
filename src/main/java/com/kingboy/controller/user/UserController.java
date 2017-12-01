@@ -1,8 +1,7 @@
 package com.kingboy.controller.user;
 
-import com.kingboy.repository.UserRepository;
-import com.kingboy.repository.entity.User;
-import org.springframework.data.domain.Pageable;
+import com.kingboy.repository.user.UserRepository;
+import com.kingboy.repository.user.entity.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
