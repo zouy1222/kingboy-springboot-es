@@ -20,17 +20,21 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	maven {
+		url "http://jenkins.maxrocky.com:8080/maven/content/repositories/thirdparty"
+	}
 }
 
 ext {
 	jnaVersion='3.0.9'
+	commonVersion='1.0'
 }
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
 	compile("com.sun.jna:jna:$jnaVersion")
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("com.kingboy:common:$commonVersion")
+	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-
-	compile project(":common")
 }
